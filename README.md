@@ -77,13 +77,39 @@ This repository contains solutions to various problem-solving questions organize
 ## Arrays
 
 ### Two Sum
-[Back to Top](#table-of-contents)
 
 **Problem:**
 Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`.
 
-**Solution:**
+**Plan:**
+1. Initialize a hash map to store the numbers and their indices.
+2. Iterate through the array.
+3. For each number, calculate its complement by subtracting it from the target.
+4. Check if the complement exists in the hash map.
+5. If it does, return the current index and the index of the complement.
+6. If it doesn’t, add the current number and its index to the hash map.
 
+**Steps:**
+1. Create an empty hash map `map`.
+2. Loop through the array with index `i` and value `nums[i]`.
+3. Compute the complement `target - nums[i]`.
+4. If `complement` is in `map`, return `[map[complement], i]`.
+5. Otherwise, set `map[nums[i]] = i`.
+6. If no solution is found, return an empty array.
+
+**Pseudo Code:**
+```pseudo
+function twoSum(nums, target):
+    map = {}
+    for i from 0 to length(nums) - 1:
+        complement = target - nums[i]
+        if complement in map:
+            return [map[complement], i]
+        map[nums[i]] = i
+    return []
+```
+
+**Solution:**
 ```typescript
 function twoSum(nums: number[], target: number): number[] {
     const map = new Map<number, number>();
@@ -97,3 +123,104 @@ function twoSum(nums: number[], target: number): number[] {
     return [];
 }
 ```
+
+
+**Time Complexity:**
+
+* Step-by-step:
+  * Initializing the hash map takes O(1).
+  * Iterating through the array of n elements takes O(n).
+  * Hash map operations (insertion and lookup) are O(1) on average.
+
+* Overall:
+  * The overall time complexity is O(n) because we only iterate through the array once.
+
+
+##### [Back to Top](#table-of-contents)
+
+
+
+### Product of Array Except Self
+
+
+**Problem:**
+Given an array nums of n integers where n > 1,
+return an array output such that output[i] is equal to the product of all the elements of nums except nums[i].
+
+
+
+**Plan:**
+1. Create two arrays, `left` and `right`, to store the product of all the elements to the left and right of each index, respectively.
+2. Compute the `left` products.
+3. Compute the `right` products.
+4. Multiply the `left` and `right` products to get the final result.
+
+
+
+
+**Steps:**
+Initialize arrays `left` and `right` with length equal to `nums` and all elements set to 1.
+Compute the `left` array:
+Set `left[0]` = 1.
+For each index i from 1 to n-1, set left[i] = left[i-1] * nums[i-1].
+Compute the `right` array:
+Set `right[n-1]` = 1.
+For each index `i` from `n-2` to 0, set `right[i] = right[i+1] * nums[i+1]`.
+Compute the result array by multiplying `left` and `right`.
+
+**Pseudo Code:**
+```pseudo
+function productExceptSelf(nums):
+    n = length(nums)
+    left = array of 1s with length n
+    right = array of 1s with length n
+    result = array of 1s with length n
+    
+    for i from 1 to n-1:
+        left[i] = left[i-1] * nums[i-1]
+    
+    for i from n-2 to 0:
+        right[i] = right[i+1] * nums[i+1]
+    
+    for i from 0 to n-1:
+        result[i] = left[i] * right[i]
+    
+    return result
+```
+
+**Solution:**
+```typescript
+function productExceptSelf(nums: number[]): number[] {
+    const n = nums.length;
+    const left = new Array(n).fill(1);
+    const right = new Array(n).fill(1);
+    const result = new Array(n).fill(1);
+
+    for (let i = 1; i < n; i++) {
+        left[i] = left[i - 1] * nums[i - 1];
+    }
+
+    for (let i = n - 2; i >= 0; i--) {
+        right[i] = right[i + 1] * nums[i + 1];
+    }
+
+    for (let i = 0; i < n; i++) {
+        result[i] = left[i] * right[i];
+    }
+
+    return result;
+}
+```
+**Time Complexity:**
+
+* Step-by-step:
+    * Initializing the `left`, `right`, and `result` arrays takes O(n).
+    *  Filling the `left` array takes O(n).
+    *  Filling the `right` array takes O(n).
+    *  Creating the `result` array takes O(n).
+
+* Overall:
+    * The overall time complexity is O(n) because we only iterate through the array once.
+
+##### [Back to Top](#table-of-contents)
+
