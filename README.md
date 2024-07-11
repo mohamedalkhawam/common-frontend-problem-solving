@@ -158,6 +158,7 @@ return an array output such that output[i] is equal to the product of all the el
 
 
 
+
 **Steps:**
 Initialize arrays `left` and `right` with length equal to `nums` and all elements set to 1.
 Compute the `left` array:
